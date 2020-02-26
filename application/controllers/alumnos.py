@@ -36,3 +36,14 @@ class Alumnos:
             result['Version']="0.1.0"
             result['status']="Faltan valores por insertar"
             return json.dumps(result)
+
+            result={}#cra un diccionario vacio
+            result['app_version'] = app_version
+            result['status'] = "200 ok"
+            with open(file, 'r') as csvfile:
+                reader = csv.DictReader(csvfile)
+                Alumnos = []
+                for row in reader:
+                    if (row['matricula'] == matricula):
+                        result['Alumnos'] = row
+            return result
