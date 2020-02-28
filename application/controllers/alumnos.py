@@ -10,33 +10,24 @@ class Alumnos:
                 result=[]           #Un arreglo
                 result2={}          #Un diccionario
                 if datos['action']=="get":        #Si accion es get va a hacer lo siguiente
-                    with open('static/csv/alumnos.csv','r') as csvfile:   #Ruta del archivo csv que va a leer, r es de lectura, csvfile es una variable cualquiera
-                        reader = csv.DictReader(csvfile)         #Lector del archivo, DictReader te almacena los datos como en diccionario en este caso en la variable reader
-                        for row in reader:              #Lee la primer fila y la manda la arreglo
-                            result.append(row)          #Lo manda al arreglo result
+                    with open('static/csv/alumnos.csv','r') as csvfile:
+                        reader = csv.DictReader(csvfile)
+                        for row in reader:
+                            result.append(row)
                             result2['Version']="0.5.1"
                             result2['status']="200 OK"
-                            result2['alumnos']=result      #Result2 en la posicion alumnos, sera lo que va a almacenar en result
-                    return json.dumps(result2)          #Va a regresar un json del result2 que es lo que va almacenando el arreglo
+                            result2['alumnos']=result
+                    return json.dumps(result2)
                 elif datos['action']=="buscar":
                     consulta={}
                     consulta['version']="0.01"
                     consulta['status']="200 ok"
-                    #matricula=datos['matricula']
-                    #result="matricula,nombre,primer_apellido,segundo_apellido,carrera\n"
                     with open('static/csv/alumnos.csv','r') as csvfile:
                         reader = csv.DictReader(csvfile)
                         result = []
                         for row in reader:
                             if str(row['matricula'])==datos['matricula']:
-                                #resultados={}
-                                #resultados['matricula']=str(row['matricula'])
-                                #resultados['nombre']=str(row['nombre'])
-                                #resultados['primer_apellido']=str(row['primer_apellido'])
-                                #resultados['segundo_apellido']=str(row['segundo_apellido'])
-                                #resultados['carrera']=str(row['carrera'])
                                 result.append(row)
-                            #resultados['alumno']=result
                     return json.dumps(result)
                 elif datos["action"] == "insertar":     #Si accion es put va a hacer lo siguiente
                     m1 = datos["matricula"]
@@ -55,7 +46,7 @@ class Alumnos:
                         writer = csv.writer(csvfiles)
                         writer.writerow(result)
                     return("Realizado")
-                elif datos['action'] == "actualizar":
+                elif datos['action'] == "actualizar":       #Si accion es actualizar va a hacer lo siguiente
                     with open ('static/csv/alumnos.csv','r') as csvfiles:
                         reader =csv.DictReader(csvfiles)
                         lo = []
@@ -97,7 +88,7 @@ class Alumnos:
                         if validator == 0:
                             result.append("No se encontro el dato")
                     return json.dumps("Actualizado")
-                elif datos['action'] == "borrar":
+                elif datos['action'] == "borrar":           #Si accion es borrar va a hacer lo siguiente
                     with open ('static/csv/alumnos.csv','r') as csvfiles:
                         reader =csv.DictReader(csvfiles)
                         lo = []
@@ -127,7 +118,7 @@ class Alumnos:
                             if validator == 0:
                                 result.append("No existe el valor")
                         return json.dumps("Realizado")
-                else:                           #Si accion no es get va a poner comando no encontrado
+                else:                           #Si la accion no es alguna de las siguientes va a poner comando no encontrado
                     result2={}
                     result2['Version']="0.5.1"
                     result2['status']="Command not found"
