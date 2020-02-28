@@ -23,7 +23,7 @@ class Alumnos:
                     consulta['version']="0.01"
                     consulta['status']="200 ok"
                     #matricula=datos['matricula']
-                    result="matricula,nombre,primer_apellido,segundo_apellido,carrera\n"
+                    #result="matricula,nombre,primer_apellido,segundo_apellido,carrera\n"
                     with open('static/csv/alumnos.csv','r') as csvfile:
                         reader = csv.DictReader(csvfile)
                         result = []
@@ -38,7 +38,7 @@ class Alumnos:
                                 result.append(row)
                             #resultados['alumno']=result
                     return json.dumps(result)
-                elif datos["action"] == "put":
+                elif datos["action"] == "insertar":     #Si accion es put va a hacer lo siguiente
                     m1 = datos["matricula"]
                     m2 = datos["nombre"]
                     m3 = datos["primer_apellido"]
@@ -50,7 +50,8 @@ class Alumnos:
                     result.append(m3)
                     result.append(m4)
                     result.append(m5)
-                    with open ('static/csv/alumnos.csv','a+', newline = '') as csvfiles:
+                    #result="matricula,nombre,primer_apellido,segundo_apellido,carrera\n"
+                    with open ('static/csv/alumnos.csv','a', newline = '') as csvfiles:
                         writer = csv.writer(csvfiles)
                         writer.writerow(result)
                     return("Realizado")
@@ -128,12 +129,12 @@ class Alumnos:
                         return json.dumps("Realizado")
                 else:                           #Si accion no es get va a poner comando no encontrado
                     result2={}
-                    result2['Version']="0.1.0"
+                    result2['Version']="0.5.1"
                     result2['status']="Command not found"
                     return json.dumps(result2)
             else:
                 result={}
-                result['Version']="0.1.0"
+                result['Version']="0.5.2"
                 result['status']="Los datos insertados son incorrectos"
                 return json.dumps(result)
         except Exception as e:
